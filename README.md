@@ -1,3 +1,3 @@
 # Purpose
 
-I this repo I will be including my R and Python Projects to be able to file, maintain, and share my projects.
+In this repo I will include my R and Python Projects in order to maintain and share my projects.
