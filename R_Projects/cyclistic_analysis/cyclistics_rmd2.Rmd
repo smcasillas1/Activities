@@ -1,0 +1,240 @@
+---
+title: "Cyclistics Case Study"
+author: "Sam Casillas"
+date: '2022-11-05'
+output:
+  pdf_document: default
+  html_document: default
+---
+
+## Business Task
+
+Cyclistic's Marketing Analyst Team has been tasked with analyzing the company's 
+customer base, casual riders and paid members, to provide possible recommendations 
+to increase memberships. The presentation needs to convince the Marketing Director 
+and Executive Board to take action.
+
+## Ask
+
+* What is/are the problem(s) you are trying to solve? 
+
+  * Answered above.
+
+* How can your insights drive business decisions? 
+
+  * This analysis should give all stakeholders the necessary information to 
+  make a decision on whether to implement presented recommendations.
+
+## Prepare
+
+* Where is your data located and how is it organized? 
+
+  * The data is located on the company's fictitious shared drive files and it's 
+  organized within .csv files exported from the company's system.
+
+* Is your data reliable, objective, complete, current, and cited? 
+  
+  * For this exercise, since Cyclistic's is a made-up company the data provided 
+  is assumed to be reliable, objective, complete, current and cited. However, 
+  real-life scenarios require Analysts to consider this and if data doesn’t 
+  meet ROCCC then he/she may not be able to provide reasonable analysis to their
+  stakeholders.
+  
+  * The data sets being reviewed has all relevant variables so that I
+  can answer the business task at hand. I'm able to able track purchasing
+  patterns of our customers therefore, understanding the customer base.
+  
+* How did you verify the data’s integrity? 
+
+  * I extracted the files from the company's database and that the data is 
+  free from bias and is credible.
+
+###Environment Setup
+
+Notes: The following packages will be installed:
+
+* Tidyverse
+* Lubridate
+* ggplot2
+* readr
+* data.table
+* rmarkdown
+* hms
+* dplyr
+
+```{r loading packages, setting up directory and importing all files within directory}
+library(tidyverse)
+library(data.table)
+library(readr)
+library(lubridate)
+library(ggplot2)
+library(rmarkdown)
+library(dplyr)
+library(hms)
+```
+
+
+```{r Identifying the files directory }
+getwd()
+fileslist <- setwd("C:\\Users\\casil\\Desktop\\CaseStudy_Cyclistic\\.csv")
+
+```
+
+```{r Listing and Consolidating all of the necessary data files}
+cycl_data <- list.files(path = fileslist,
+                        pattern = "*.csv", full.names = TRUE) %>% 
+  lapply(read_csv) %>%
+  bind_rows
+```
+
+
+###View data variables
+
+```{r}
+glimpse(cycl_data)
+```
+
+
+## Process
+
+* What tools are you choosing and why? 
+
+  * I will be using R programming language because it will allow me to wrangle 
+  nearly 6 million observations, create this report, create the necessary 
+  visualizations in one central location.
+  
+  * All system source files are secure and no one has access to the files nor
+  has any changes been made to way the report came out of the system.
+
+* What are your data cleaning steps?
+  
+  * Extracted CSV files directly from system for each month of transactions.
+  * Loaded necessary R packages to complete my analysis.
+  * Consolidated all system source files into one dataframe.
+  * Formatted started/ended_at columns into dates to extract date information
+  * Split date variables into Year,Month, day_of_week and weekday columns
+  * Formatted columns to appropriately to the information housed in columns
+  * Removed ride_id duplicates
+
+```{r Format/split start-end dates/times variables }
+cycl_data$started_at <- strptime(cycl_data$started_at, "%m/%d/%Y %H:%M")
+cycl_data$ended_at <- strptime(cycl_data$ended_at, "%m/%d/%Y %H:%M")
+
+
+cycl_data$year <- format(as.Date(cycl_data$started_at), "%Y")
+cycl_data$month <- format(as.Date(cycl_data$started_at), "%m")
+
+cycl_data$weekday_name <- format(as.Date(cycl_data$started_at), "%A")
+
+cycl_data$day_of_week <- factor(cycl_data$weekday_name,
+                                levels = c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"))
+
+```
+
+```{r Formatting added variables accordingly}
+
+cycl_data$day_of_week <- as.integer(cycl_data$day_of_week)
+cycl_data$month <- as.integer(cycl_data$month)
+cycl_data$year <- as.integer(cycl_data$year)
+
+```
+
+```{r removed duplicated rider_ids}
+
+clean_cycl_data <- cycl_data[!duplicated(cycl_data$ride_id), ]
+
+```
+
+
+## Analyze
+
+* Has your data been properly formatted? 
+
+  * Yes, I've properly formatted each variable.
+
+* What trends/relationships did you discover? 
+
+  * Casual riders are using the bike program more on weekends and the members 
+  are using the bikes consistently throughout the work week.
+  
+  * Casual riders have higher median ride lengths everyday of the week vs. riders
+  with memberships which is showing that casual riders are using the bikes longer
+  per ride compared to our paid members.
+  
+  * I was surprised at how much of a difference the median rides differ between 
+  casual and members. I was thinking that members would have higher ride times 
+  only because they use our products much more frequently however, that wasn't 
+  the case.
+
+```{r Grouping Rider Types by days}
+ridertype_days <- clean_cycl_data %>%
+  group_by(member_casual, day_of_week) %>%
+  count(day_of_week)
+```
+
+```{r Grouping Rider Types by Day and median ride length}
+grp_riders_len <- clean_cycl_data %>% 
+  group_by(member_casual) %>% 
+  summarise(rider_ct = n(),
+            median_ride_len = median(ride_length))
+
+grp_riders_len
+```
+
+
+## Share
+
+* What story does your data tell?
+
+  * Based on the data one is led to believe that our members are using the bikes 
+    during workdays and commuting throughout the city limits and our casual 
+    riders are using the bikes for leisure.
+  
+  * Casual riders, on average, are using the bikes for longer periods of times 
+    even though they have nearly 1M less riders when compared to our paid 
+    members. One can guess that casual riders are using the bikes while they are 
+    exploring the city's attractions.
+
+* How does your findings relate to your original question?
+
+  * My findings provide a clear understanding on how our customers are using our 
+    services/products. Furthermore, I believe the Marketing Director and Executive
+    Director have the necessary information in order to formulate a plan to 
+    attract more customers based on purchasing patters.
+
+```{r Bar Chart for Member Type and Day of Week}
+ggplot(clean_cycl_data)+
+  geom_bar(aes(x = reorder(weekday_name,day_of_week), fill=(member_casual)))+
+  facet_wrap(~member_casual)+
+  labs(title = "Rider Type usage throughout Week")
+```
+
+```{r Rider Types by Calendar Year Months}
+ggplot(clean_cycl_data,
+       aes(x = as.factor(format(started_at, format = "%m"))))+
+  geom_bar(aes(fill = (member_casual)))+
+  scale_x_discrete(name = 'Month')+
+  facet_wrap(~member_casual)+
+  labs(title = "Rider Count by Calendar Month")
+```
+
+## Act
+
+* What is your final conclusion based on your analysis?
+
+  * I would communicate to the Marketing Director and Executive Director that our
+    casual riders are using our products more between the months of May - Oct. 
+    Also, I would recommend that they should develop short term memberships that 
+    will attract casual riders while they are exploring the city limits.
+    
+  * Unfortunately, the data doesn't definitively communicate if the same casual
+    riders are reusing our services over long periods of time. The large influx
+    of casual users can be due to higher tourism during the months of May - Oct.
+
+* What next steps would your stakeholders take based on your findings?
+
+  * The Marketing Director would present any potential plans that will attract
+    more frequent riders and convincing them to purchase memberships.
+    
+  * Executive Director would decide if the presented plans will be suitable to 
+  meet his/her goals for the company to increase paid memberships. 
