@@ -1,0 +1,31 @@
+ContractID,Customer,DollarsObligated,Category,Contract_Dt,TransactionID,Price,Quantity,Description,Transaction_Dt
+C0001,Energy Department,63900.0,Support Services,2020-01-15,T0030,211.0,11,Tech Support Hours,2020-04-26
+C0003,Commerce Department,58900.0,Computers,2020-01-21,T0003,1154.0,3,hp elitebook,2020-02-13
+C0003,Commerce Department,58900.0,Computers,2020-01-21,T0004,655.0,11,dell inspiron,2020-02-15
+C0003,Commerce Department,58900.0,Computers,2020-01-21,T0015,457.0,22,asus zenbook,2020-03-10
+C0003,Commerce Department,58900.0,Computers,2020-01-21,T0020,1210.0,8,macbook,2020-03-16
+C0003,Commerce Department,58900.0,Computers,2020-01-21,T0022,586.0,10,asus zenbook,2020-03-19
+C0004,Transportation Department,32000.0,Computers,2020-01-21,T0012,1909.0,5,Web server,2020-03-01
+C0004,Transportation Department,32000.0,Computers,2020-01-21,T0029,1167.0,14,Dell desktop,2020-04-13
+C0005,Transportation Department,25000.0,Computers,2020-01-26,T0005,1017.0,15,dell xps,2020-02-16
+C0005,Transportation Department,25000.0,Computers,2020-01-26,T0008,434.0,9,HP printer scanner,2020-02-17
+C0005,Transportation Department,25000.0,Computers,2020-01-26,T0017,533.0,5,dell latitude,2020-03-14
+C0006,Commerce Department,54800.0,Support Services,2020-01-27,T0002,192.0,37,Tech Support Hours,2020-02-12
+C0006,Commerce Department,54800.0,Support Services,2020-01-27,T0013,171.0,25,Tech Support Hours,2020-03-06
+C0006,Commerce Department,54800.0,Support Services,2020-01-27,T0026,998.0,22,Data architect hours,2020-04-03
+C0007,Commerce Department,25800.0,Mobile Devices,2020-01-29,T0006,200.0,21,blackberry,2020-02-16
+C0007,Commerce Department,25800.0,Mobile Devices,2020-01-29,T0010,143.0,4,Nokia phone,2020-02-30
+C0007,Commerce Department,25800.0,Mobile Devices,2020-01-29,T0014,502.0,3,iphone,2020-03-07
+C0007,Commerce Department,25800.0,Mobile Devices,2020-01-29,T0016,1015.0,8,Google Pixel Pro,2020-03-14
+C0007,Commerce Department,25800.0,Mobile Devices,2020-01-29,T0019,202.0,4,blackberry,2020-03-14
+C0007,Commerce Department,25800.0,Mobile Devices,2020-01-29,T0021,451.0,10,iPhone,2020-03-16
+C0008,Energy Department,84600.0,Computers,2020-02-04,T0001,1053.0,17,macbook,2020-02-08
+C0009,Commerce Department,27600.0,Support Services,2020-02-19,T0007,156.0,101,Tech Support Hours,2020-02-17
+C0009,Commerce Department,27600.0,Support Services,2020-02-19,T0009,1153.0,10,Data architect hours,2020-02-23
+C0009,Commerce Department,27600.0,Support Services,2020-02-19,T0024,296.0,6,Tech Support Hours,2020-03-25
+C0010,Transportation Department,49800.0,Computers,2020-02-28,T0011,770.0,1,dell latitude,2020-03-01
+C0010,Transportation Department,49800.0,Computers,2020-02-28,T0018,454.0,6,iPad,2020-03-14
+C0010,Transportation Department,49800.0,Computers,2020-02-28,T0023,1183.0,17,HP Elitebook,2020-03-23
+C0010,Transportation Department,49800.0,Computers,2020-02-28,T0025,380.0,12,ASUS Tablet,2020-03-26
+C0010,Transportation Department,49800.0,Computers,2020-02-28,T0027,68.0,74,Keyboard mouse combo,2020-04-09
+C0010,Transportation Department,49800.0,Computers,2020-02-28,T0028,975.0,18,tablet and stylus,2020-04-10
